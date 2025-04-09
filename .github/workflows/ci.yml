@@ -96,6 +96,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
+      - name: Connect to server
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}
+
       - name: Install Docker
         run: |
           sudo apt-get update
@@ -114,12 +117,11 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           echo "Running commands on the remote server"
           docker --version
           docker pull ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
           docker stop myapp || true
           docker rm myapp || true
           docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
-          EOF
+          
 
