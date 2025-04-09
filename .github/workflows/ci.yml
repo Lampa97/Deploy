@@ -119,6 +119,7 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
           sudo docker stop myapp || true
           sudo docker rm myapp || true
+          echo "Running Docker container"
           sudo docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}
           EOF
 
