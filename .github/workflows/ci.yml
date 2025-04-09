@@ -34,6 +34,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: Chelsea1905
           POSTGRES_DB: Test
+          POSTGRES_HOST: localhost
         ports:
           - 5432:5432
 
